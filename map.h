@@ -18,6 +18,8 @@ private:
 	//int [][] activeRoomLocation;
 	int mainMap [4][4] = {{0}}; 
 	char playerMap [4][4] = {""};
+	int placeHolderX;
+	int placeHolderY;
 	
 public:
 	void MakeMap();
@@ -36,6 +38,7 @@ void map::MakeMap(){
 	mt19937 engine(time(0)); 
 	uniform_int_distribution<int> startRoom(0,3);
 	int currentRoomX = startRoom(engine);
+	placeHolderX = currentRoomX; 
 	int currentRoomY = 3; 
 	mainMap[currentRoomY][currentRoomX] = 1; 
 	uniform_int_distribution<int> direction(0,2);
@@ -72,6 +75,7 @@ void map::MakeMap(){
 					finalMove = true; 
 					//Change last room to boss room. 
 					mainMap[currentRoomY][currentRoomX] = 7;
+					placeHolderY = currentRoomX;
 				}
 				else {
 					currentRoomY--;
@@ -114,6 +118,9 @@ void map::PrintMap(){
 };
 
 void map::PlayerMapPrint(){
+	cout<< "DUNGUEN FLOOR MAP" << endl;
+	cout<< "O is start room." << endl;
+	cout<< "X is boss room." << endl;
 	for(int i = 0; i < 4; i++){
 		for(int j = 0; j < 4; j++){
 			cout << playerMap[i][j];
@@ -132,7 +139,8 @@ void map::MakePlayerMap(){
 };
 
 void map::UpdatePlayerMap(){
-	
+	playerMap[3][placeHolderX] = 'O'; 
+	playerMap[0][placeHolderY] = 'X'; 
 	
 };
 
